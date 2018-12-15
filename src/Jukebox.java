@@ -1,11 +1,15 @@
+
 /*
  *    Copyright (c) The League of Amazing Programmers 2013-2018
  *    Level 1
  */
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
@@ -23,7 +27,13 @@ import javazoom.jl.player.advanced.AdvancedPlayer;
 /* 1. Download the JavaZoom jar from here: http://bit.ly/javazoom
  * 2. Right click your project and add it as an External JAR (Under Java Build Path > Libraries).*/
 
-public class Jukebox implements Runnable {
+public class Jukebox implements Runnable, MouseListener {
+	JLabel label1;
+	JLabel label2;
+	JLabel label3;
+	Song song1;
+	Song song2;
+	Song song3;
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Jukebox());
@@ -33,7 +43,10 @@ public class Jukebox implements Runnable {
 
 		// 3. Find an mp3 on your computer or on the Internet.
 		// 4. Create a Song
-		Song song = new Song("Happier - Marshmello ft. Bastille.mp3");
+		song1 = new Song("Happier - Marshmello ft. Bastille.mp3");
+		song2 = new Song("thank u, next - Ariana Grande.mp3");
+		song3 = new Song("High Hopes - Panic! At The Disco.mp3");
+
 		// 5. Play the Song
 		/*
 		 * 6. Create a user interface for your Jukebox so that the user can to choose
@@ -43,10 +56,22 @@ public class Jukebox implements Runnable {
 		 */
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
-		JButton button1 = new JButton();
-		JButton button2 = new JButton();
-		JButton button3 = new JButton();
-		BufferedImage img1 = ImageIO.read(this.getClass().getResourceAsStream("Happier Album Cover.png"));
+
+		label1 = loadImage("Happier Album Cover.png");
+		label2 = loadImage("thank u, next Album Cover.png");
+		label3 = loadImage("Pray for The Wicked Album Cover.jpg");
+
+		label1.addMouseListener(this);
+		label2.addMouseListener(this);
+		label3.addMouseListener(this);
+
+		panel.add(label1);
+		panel.add(label2);
+		panel.add(label3);
+		frame.add(panel);
+		frame.setVisible(true);
+		frame.pack();
+
 	}
 
 	/* Use this method to add album covers to your Panel. */
@@ -54,6 +79,51 @@ public class Jukebox implements Runnable {
 		URL imageURL = getClass().getResource(fileName);
 		Icon icon = new ImageIcon(imageURL);
 		return new JLabel(icon);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		JLabel clicked = (JLabel) e.getSource();
+
+		song1.stop();
+		song2.stop();
+		song3.stop();
+
+		if (clicked == label1) {
+			song1.play();
+
+		} else if (clicked == label2) {
+			song2.play();
+
+		} else {
+			song3.play();
+
+		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
