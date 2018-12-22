@@ -3,7 +3,6 @@
  *    Level 1
  */
 
-
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -14,29 +13,31 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class MagicBox extends JPanel implements Runnable, MouseListener {
-
+	JLabel label;
+	JFrame frame;
 	/*
-	 * We are going to hide secrets within the magic box. 
-	 * When the user clicks on a secret place, stuff will happen.
+	 * We are going to hide secrets within the magic box. When the user clicks on a
+	 * secret place, stuff will happen.
 	 * 
 	 * 1. Make the frame respond to mouse clicks.
 	 * 
-	 * 2. When the mouse is clicked, use the Media Palace (read the code in the default package) to play sounds, show images or speak.
+	 * 2. When the mouse is clicked, use the Media Palace (read the code in the
+	 * default package) to play sounds, show images or speak.
 	 * 
-	 * 3. backgroundImage.getRGB(keyEvent.getX(), keyEvent.getY()) will give you the color of the current pixel.
+	 * 3. backgroundImage.getRGB(keyEvent.getX(), keyEvent.getY()) will give you the
+	 * color of the current pixel.
 	 */
 
 	BufferedImage backgroundImage;
 
 	public static void main(String[] args) throws Exception {
 		SwingUtilities.invokeLater(new MagicBox());
-	
-		
-		
+
 	}
 
 	@Override
@@ -50,7 +51,8 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 	}
 
 	private void createUI() {
-		JFrame frame = new JFrame("The Magic Box contains many secrets...");
+		frame = new JFrame("The Magic Box contains many secrets...");
+		frame.addMouseListener(this);
 		frame.add(this);
 		setPreferredSize(new Dimension(backgroundImage.getWidth(), backgroundImage.getHeight()));
 		frame.pack();
@@ -75,36 +77,41 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
+		backgroundImage.getRGB(keyEvent.getX(), keyEvent.getY());
+		System.out.println("muose clicked");
 		JFrame clicked = (JFrame) e.getSource();
 		MediaPalace run = new MediaPalace();
-		run.loadImageFromHardDrive("magic-box.jpg");
+		JFrame frame1 = new JFrame();
+		label = run.loadImageFromHardDrive("src/magic_box.jpg");
+		frame1.add(label);
+		frame1.setVisible(true);
+		frame1.pack();
 		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
-
-
