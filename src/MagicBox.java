@@ -77,7 +77,7 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		backgroundImage.getRGB(keyEvent.getX(), keyEvent.getY());
+		backgroundImage.getRGB(e.getX(), e.getY());
 		System.out.println("muose clicked");
 		JFrame clicked = (JFrame) e.getSource();
 		MediaPalace run = new MediaPalace();
