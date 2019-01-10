@@ -4,13 +4,18 @@ int x2 = 1920;
 int y = 540;
 int height = 250;
 int height2 = 250;
+int score;
+boolean pipes;
 void draw() {
-  x=200;
+  x=210;
   y+=3;
   x1-=3;
   x2-=3;
 
   background(0, 0, 0); 
+
+  text("Score: " + score, 10, 10);
+
 
   fill(#FFF300);
   stroke(255, 255, 255);
@@ -26,10 +31,21 @@ void draw() {
   teleportPipes2();
   fill(0, 255, 0);
   rect(x2, 1080-height2, 50, height2);
-  
-boolean pipes = intersectsPipes();
-if(pipes == true){
+
+  fill(0, 255, 0);
+  rect(0, 1070, 1920, 10);
+  if (y >= 1070) {
+    pipes = true;
+    print("You got " + score + " points. ");
     exit();
+  }
+
+  pipes = intersectsPipes();
+  if (pipes == true) {
+    print("You got " + score + " points. ");
+    exit();
+  } else if (x==x1) {
+    score++;
   }
 }
 void setup() {
@@ -51,13 +67,14 @@ void teleportPipes2() {
     height2 = (int)random(100, 400);
     x2 = 1920;
   }
-  
 }
 
 boolean intersectsPipes() { 
-     if (y < height && x > x1 && x < (x1+50)){
-          return true; }
-     else if (y>1080-height2 && x > x1 && x < (x1+50)) {
-          return true; }
-     else { return false; }
+  if (y < height && x > x1 && x < (x1+50)) {
+    return true;
+  } else if (y>1080-height2 && x > x1 && x < (x1+50)) {
+    return true;
+  } else { 
+    return false;
+  }
 }
