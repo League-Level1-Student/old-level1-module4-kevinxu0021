@@ -1,17 +1,10 @@
 int frogX;
 int frogY;
-Car car1 = new Car();
-int car1X;
-int car1Y;
-int car1Size;
-Car car2 = new Car();
-int car2X;
-int car2Y;
-int car2Size;
-Car car3 = new Car();
-int car3X;
-int car3Y;
-int car3Size;
+
+Car car1 = new Car(36, 234, 50, 1);
+Car car2 = new Car(25, 57, 50, 4);
+Car car3 = new Car(65, 152, 50, -2);
+
 void draw() {
   background (0, 0, 0);
 
@@ -19,10 +12,29 @@ void draw() {
   ellipse(frogX, frogY, 10, 10);
   keyPressed();
   keepFrogInside();
-  
-  car1.display(car1X, car1Y, car1Size);
-  car2.display(car2X, car2Y, car2Size);
-  car3.display(car3X, car3Y, car3Size);
+
+  car1.display();
+  car2.display();
+  car3.display();
+
+  car1.moveCar();
+  car2.moveCar();
+  car3.moveCar();
+
+  boolean boolean1 = intersects(car1);
+  boolean boolean2 = intersects(car2);
+  boolean boolean3 = intersects(car3);
+
+  if (boolean1 == true) {
+    frogX = 0;
+    frogY = 0;
+  } else if (boolean2 == true) {
+    frogX = 0;
+    frogY = 0;
+  } else if (boolean3 == true) {
+    frogX = 0;
+    frogY = 0;
+  }
 }
 void setup() {
   size(400, 400);
@@ -63,18 +75,46 @@ void keepFrogInside() {
   }
 }
 
-class Car{
- int carX = 0;
- int carY = 0;
- int carSize = 25;
- int carSpeed;
- 
-Car(){
-}
- void display(int x, int y, int size) 
-{
-      fill(0,255,0);
-      rect(x , y, size, 50);
-}
+class Car {
+  int carX = 0;
+  int carY = 0;
+  int carSize = 25;
+  int carSpeed;
 
+  Car(int x, int y, int size, int speed) {
+    this.carX = x;
+    this.carY = y;
+    this.carSize = size;
+    this.carSpeed = speed;
+  }
+  void display() {
+    fill(0, 255, 0);
+    rect(carX, carY, carSize, 50);
+  }
+  void moveCar() {
+    carX-=carSpeed;
+    if (carX<=0) {
+      carX = width;
+    } else if (carX>=width) {
+      carX = 0;
+    }
+  }
+  int getX() {
+    return carX;
+  }
+  int getY() {
+    return carY;
+  }
+  int getSize() {
+    return carSize;
+  }
+}
+boolean intersects(Car car) {
+  if ((frogY > car.getY() && frogY < car.getY()+50) && (frogX > car.getX() && frogX < car.getX()+car.getSize()))
+  {
+    return true;
+  } else 
+  {
+    return false;
+  }
 }
